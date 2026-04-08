@@ -1,0 +1,100 @@
+spring:
+  application:
+    name: cost-analysis-backend
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/cost_analysis
+    username: cost_user
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Seoul
+
+  data:
+    redis:
+      host: redis
+      port: 6379
+      password: ${REDIS_PASSWORD:}
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          min-idle: 2
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+  sql:
+    init:
+      mode: never
+
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 100
+    connection-timeout: 120000
+
+jwt:
+  secret: ${JWT_SECRET:default-jwt-secret-key-for-dev-must-be-at-least-32-bytes}
+  access-token-expiry: 3600        # 1시간 (초)
+  refresh-token-expiry: 604800     # 7일 (초)
+
+minio:
+  endpoint: http://minio:9000
+  access-key: ${MINIO_USER:minioadmin}
+  secret-key: ${MINIO_PASSWORD:minioadmin}
+  bucket: cost-analysis-files
+  presigned-url-expiry: 3600       # 초
+
+claude:
+  api-url: https://api.anthropic.com
+  api-key: ${CLAUDE_API_KEY:}
+  model: claude-opus-4-6
+  max-tokens: 8192
+  timeout-seconds: 120
+
+cors:
+  allowed-origins:
+    - http://localhost:5173
+    - http://localhost:3000
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    com.costanalysis: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN

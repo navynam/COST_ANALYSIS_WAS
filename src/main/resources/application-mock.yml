@@ -1,0 +1,52 @@
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:h2:mem:unused
+    username: sa
+    password: "mock"
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: "mock"
+  sql:
+    init:
+      mode: never
+
+server:
+  port: 8080
+
+cors:
+  allowed-origins: http://localhost:3000,http://localhost:5173
+
+jwt:
+  secret: mock-secret-key-for-development-only-must-be-at-least-32-bytes-long
+  access-token-expiry: 86400
+  refresh-token-expiry: 604800
+
+# 사용하지 않지만 base application.yml 의 placeholder 해소를 위한 더미 값
+minio:
+  endpoint: http://localhost:9000
+  access-key: mock-access-key
+  secret-key: mock-secret-key
+  bucket: mock-bucket
+  presigned-url-expiry: 3600
+
+claude:
+  api-url: https://api.anthropic.com
+  api-key: mock-api-key
+  model: mock-model
+  max-tokens: 100
+  timeout-seconds: 10
+
+logging:
+  level:
+    com.costanalysis: DEBUG

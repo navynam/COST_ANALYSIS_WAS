@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cost_analysis
+    username: cost_user
+    password: ${DB_PASSWORD:devpassword}
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  data:
+    redis:
+      host: localhost
+      password: ${REDIS_PASSWORD:devredis}
+
+minio:
+  endpoint: http://localhost:9000
+
+cors:
+  allowed-origins:
+    - http://localhost:5173
+    - http://localhost:3000
+    - http://localhost:5174
+
+logging:
+  level:
+    com.costanalysis: DEBUG
+    org.hibernate.SQL: DEBUG
