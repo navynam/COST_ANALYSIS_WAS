@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/cost_analysis
-    username: cost_user
-    password: ${DB_PASSWORD:devpassword}
+    url: jdbc:postgresql://121.134.174.251:30000/mobis_test
+    username: tobis
+    password: ${DB_PASSWORD:tobis!@#}
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: true
 
   data:
